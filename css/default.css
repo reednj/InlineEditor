@@ -1,0 +1,46 @@
+/* 
+ * Default CSS file. Sets up a blank slate for everything
+ * else.
+ *
+ * Nathan Reed, 08JUN2008
+ */
+html, body, form {
+	margin: 0;
+	padding: 0;
+}
+
+p, div, span, h1, h2, h3, h4 {
+	margin:  0;
+	padding: 0;
+	font-family: arial;
+}
+
+.clear { clear: both; }
+.left  { float: left; }
+.right { float:right; }
+
+a {
+	color: #0099FF;
+	text-decoration: none;
+}
+
+a:hover { text-decoration: underline; }
+img {border: none; }
+
+/*
+ * All this is code to make the footer sticky.
+ */
+html, body {
+	height: 100%;
+}
+
+#wrapper {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -100px; /* the bottom margin is the negative value of the footer's height */
+}
+
+#f-wrapper, #push {
+	height: 100px; /* .push must be the same height as .footer */
+}

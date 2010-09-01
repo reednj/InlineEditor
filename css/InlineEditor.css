@@ -1,0 +1,28 @@
+.ine-root a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.ine-root a:hover {
+	background-color: #FFF6BF;
+}
+
+.ine-root form {
+	display:inline;
+}
+
+.ine-root input, .ine-root select  {
+	font-size: 0.9em;
+	padding: 0.1em;
+	vertical-align: middle;
+}
+
+.ine-root input[type=button], .ine-root input[type=submit] {
+	padding: 0.1em 0.5em;
+}
+
+.ine-error {
+	font-size: 0.8em;
+	font-weight: bold;
+	color: red;
+}

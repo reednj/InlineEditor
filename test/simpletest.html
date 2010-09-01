@@ -1,0 +1,74 @@
+<!doctype html public "-//w3c//dtd html 4.0 strict//en">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title> Inline editor test </title>
+
+<link rel="stylesheet" href="../css/default.css" type="text/css">
+<link rel="stylesheet" href="../css/InlineEditor.css" type="text/css">
+<script src='../js/lib/mootools-1.2.4-core.js' type='text/javascript'></script>
+<script src='../js/lib/reednj-lib.js' type='text/javascript'></script>
+<script src='../js/InlineEditor.js' type='text/javascript'></script>
+<script src='../js/InlineEditor.Combo.js' type='text/javascript'></script>
+
+<style type='text/css'>
+	#t-body {
+		font-size: 16pt;
+		margin: 96px;
+	}
+	
+	.editable-dd div {
+		display:none;
+	}
+
+</style>
+
+<script type='text/javascript'>
+
+var Ui = {
+	init: function() {
+		$$('.editable').each(function(item) {
+			new InlineEditor(item);
+		});
+		
+		$$('.editable-dd').each(function(item) {
+			new InlineEditor.Combo(item);
+		});
+		
+		new InlineEditor.Combo('edit-combo', {options_list: [
+			{'text':'eins', 'value':'1'},
+			{'text':'zwei', 'value':'2'},
+			{'text':'drei', 'value':'3', 'selected':true}
+		]});
+	}
+}
+
+window.addEvent('load', Ui.init.bind(Ui));
+
+</script>
+
+</head>
+<body>
+
+	
+<div id='t-body'>
+
+<div class='editable' data-url='api/edittest.php' data-id='12'>edit me!</div>
+<div class='editable' data-url='api/edittest.php' data-id='13'>nathan</div>
+<div class='editable' data-url='api/edittest.php' data-id='14'>jones</div>
+
+<div class='editable-dd' data-url='api/edittest.php' data-id='14'>
+	<div data-value='1'>Alpha</div>
+	<div data-value='2'>Beta</div>
+	<div data-value='3' data-selected='true'>Charlie</div>
+	<div data-value='4'>Delta</div>
+	<div data-value='5'>Echo</div>
+</div>
+
+<div id='edit-combo' data-url='api/edittest.php' data-id='15'></div>
+
+</div>
+
+</body>
+</html>
