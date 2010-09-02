@@ -1,0 +1,7 @@
+InlineEditor
+============
+
+
+How to use
+----------
+
