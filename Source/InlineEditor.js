@@ -1,4 +1,19 @@
+/*
+---
+description: InlineEditor
 
+license: MIT-style
+
+authors:
+- Nathan Reed
+
+requires:
+- core/1.2.4: '*'
+
+provides: InlineEditor
+
+...
+*/
 var InlineEditor = new Class({
 	initialize: function(elem, options) {
 		this.element = $(elem);

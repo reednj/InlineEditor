@@ -1,7 +1,5 @@
 InlineEditor
 ============
 
-
 How to use
 ----------
-

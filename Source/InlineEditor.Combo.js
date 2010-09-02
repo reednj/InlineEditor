@@ -1,3 +1,19 @@
+/*
+---
+description: InlineEditor.Combo
+
+license: MIT-style
+
+authors:
+- Nathan Reed
+
+requires:
+- core/1.2.4: '*'
+
+provides: InlineEditor.Combo
+
+...
+*/
 InlineEditor.Combo = new Class({
 	Extends: InlineEditor,
 	
