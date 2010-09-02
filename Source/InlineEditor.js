@@ -1,6 +1,6 @@
 /*
 ---
-description: InlineEditor
+description: InlineEditor - Simple Edit-inPlace AJAX edit control
 
 license: MIT-style
 

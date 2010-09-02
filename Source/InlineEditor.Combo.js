@@ -1,6 +1,6 @@
 /*
 ---
-description: InlineEditor.Combo
+description: InlineEditor.Combo - Simple Edit-inPlace AJAX dropdown list control
 
 license: MIT-style
 
@@ -9,6 +9,7 @@ authors:
 
 requires:
 - core/1.2.4: '*'
+- InlineEditor
 
 provides: InlineEditor.Combo
 
