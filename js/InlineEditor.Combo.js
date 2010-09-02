@@ -67,7 +67,7 @@ InlineEditor.Combo = new Class({
 	},
 	
 	_set_link: function() {
-		this.current_text = 'id: ' + this.edit_input.value; //TODO: change this so that it uses the text value
+		this.current_text = this.edit_input.options[this.edit_input.selectedIndex].text;;
 		this.edit_link.innerHTML = this.current_text;
 	}
 });
