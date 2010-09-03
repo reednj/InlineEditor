@@ -22,7 +22,7 @@ When the editbox is saved a GET request will be made to that url with the new da
 
 Maybe you need to send some meta-data such as a row_id along with the request. Use the 'id' option:
 	
-	new InlineEditor(element, {url: 'save-change.php', 'id':15});
+	new InlineEditor(element, {url: 'save-change.php', 'data':{'id':15}});
 	
 You can also place these attributes on the element its self, like this:
 	
@@ -44,7 +44,6 @@ This can be done in the javascript constructor:
 	
 	new InlineEditor.Combo(element, {
 		url: 'save-edit.php',
-		id: '12',
 		options_list: [
 			{'text':'one', 'value':'1'},
 			{'text':'two', 'value':'2'},
@@ -54,7 +53,7 @@ This can be done in the javascript constructor:
 
 or in the dom:
 	
-	<div class='editable-combo' data-url='save-edit.php' data-id='12'>
+	<div class='editable-combo' data-url='save-edit.php'>
 		<div data-value='1'>One</div>
 		<div data-value='2'>Two</div>
 		<div data-value='3' data-selected='true'>Three</div>
