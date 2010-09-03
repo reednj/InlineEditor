@@ -1,6 +1,6 @@
 name: InlineEditor
 author: reednj
-category: Interface
+category: Widgets
 tags: [ajax, element, interface]
-#docs: http://url.to.docs
-#demo: http://url.to.demo
+docs: http://github.com/reednj/InlineEditor/blob/master/Docs/
+demo: http://popacular.com/inline-editor/Test/demo.html
