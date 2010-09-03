@@ -54,6 +54,8 @@ var InlineEditor = new Class({
 			'events':{'click':this.start_edit.bind(this)}
 		});
 		
+		// we create the form inside a span because having a form straight in there
+		// can cause strange things to happen...
 		this.edit_form = $e('span', {
 			'styles':{'display':'none'},
 			'children': this._create_form()
@@ -64,14 +66,13 @@ var InlineEditor = new Class({
 	
 	_create_form: function() {
 		return $e('form', {
-			'onsubmit': 'return false;',
+			'events':{'submit': function() {this.save_edit(); return false;}.bind(this)},
 			'children': [
 				this.edit_input = this._create_input(),
 				
 				this.save_button = $e('input', {
 					'type':'submit', 
-					'value':this._save_button_msg, 
-					'events':{'click':this.save_edit.bind(this)}
+					'value':this._save_button_msg
 				}),
 				
 				this.cancel_button = $e('input', {
@@ -103,6 +104,12 @@ var InlineEditor = new Class({
 		this.save_button.disabled = false;
 		this.cancel_button.disabled = false;
 		this.error_span.innerHTML = '';
+		
+		// TODO this is in totally the wrong place. We should call a start
+		// edit event.
+		if($defined(this.edit_input.selectedIndex)) {
+			this.edit_input.selectedIndex= this.selectedIndex;
+		}
 	},
 	
 	cancel_edit: function() {
@@ -120,12 +127,13 @@ var InlineEditor = new Class({
 		this.save_button.value = this._saving_msg;
 		
 		var new_value = this.edit_input.value.trim();
-		//var request_data = (this.options.id)? {'value':new_value, 'id': this.options.id} : {'value':new_value};
+		
+		// set up the data to send to the server.
 		var request_data = $H({'value':new_value});
 		request_data.combine(this.options.data);
 		request_data.include('id', this.element.get('data-id')); // if 'id' already exists it will not be overwritten
 			
-		new Request.JSON({
+		new Request({
 			'url': this.options.url,
 			onSuccess: this.save_complete.bind(this),
 			onFailure: function(xhr) {
@@ -139,7 +147,7 @@ var InlineEditor = new Class({
 		}).get(request_data);		
 	},
 	
-	save_complete: function(json_response) {
+	save_complete: function() {
 		this.edit_form.hide();
 		this.edit_link.show();
 		

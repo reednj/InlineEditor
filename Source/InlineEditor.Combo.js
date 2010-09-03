@@ -24,7 +24,8 @@ InlineEditor.Combo = new Class({
 		this.options.options_list = this.options.options_list || this._read_options() || [];
 
 		this.parent(this.element, this.options);
-		this._set_default(this.options.options_list);
+		
+		this.selectedIndex = this._set_default(this.options.options_list);
 		this.edit_link.innerHTML = this.current_text;
 	},
 	
@@ -56,21 +57,26 @@ InlineEditor.Combo = new Class({
 	
 	_set_default: function(options_list) {
 		var has_default = false;
+		var selectedIndex = -1;
 		
-		// scan through the list, set the current test, and select the
+		// scan through the list, set the current_text, and select the
 		// default item. if no default is specified then select the top 
 		// item.
 		for(var i=0; i < options_list.length; i++) {
 			if(options_list[i].selected == true) {
 				this.current_text = options_list[i].text;
 				has_default = true;
+				selectedIndex = i;
 				break;
 			}
 		}
 		
 		if(has_default == false && options_list.length > 0) {
 			this.current_text = options_list[0].text;
+			selectedIndex = 0;
 		}
+		
+		return selectedIndex;
 	},
 	
 	_create_input: function() {
@@ -84,7 +90,8 @@ InlineEditor.Combo = new Class({
 	},
 	
 	_set_link: function() {
-		this.current_text = this.edit_input.options[this.edit_input.selectedIndex].text;;
+		this.selectedIndex = this.edit_input.selectedIndex;
+		this.current_text = this.edit_input.options[this.selectedIndex].text;;
 		this.edit_link.innerHTML = this.current_text;
 	}
 });
