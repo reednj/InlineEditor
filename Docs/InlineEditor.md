@@ -15,8 +15,8 @@ InlineEditor Method: constructor {#InlineEditor:constructor}
 
 ### Options:
 * url		- (*string*) url to send the save request to
-* data		- (*object*) extra data to send along with the save request
-* empty_msg	- (*string*) the message to show when the element is empty. You can use html.
+* data		- (*object, optional*) extra data to send along with the save request
+* empty_msg	- (*string, optional*) the message to show when the element is empty. You can use html.
 
 ### Events:
 
