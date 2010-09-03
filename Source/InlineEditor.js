@@ -16,11 +16,18 @@ provides: InlineEditor
 */
 var InlineEditor = new Class({
 	initialize: function(elem, options) {
+		// save these up here, and maybe later we can override them for
+		// interationalization.
+		this._save_button_msg = 'save';
+		this._cancel_button_msg = 'cancel';
+		this._saving_msg = 'saving...';
+		this._default_error = 'Could Not Save';
+		this._error_prefix = ' Error: ';
+		
 		this.element = $(elem);
 		
 		// set defaults...
 		this.options = options || {};
-		this.options.save_text = this.options.save_text || 'save';
 		this.options.url = this.options.url || this.element.get('data-url');
 		this.options.id = this.options.id || this.element.get('data-id');
 		
@@ -60,13 +67,13 @@ var InlineEditor = new Class({
 				
 				this.save_button = $e('input', {
 					'type':'submit', 
-					'value':'save', 
+					'value':this._save_button_msg, 
 					'events':{'click':this.save_edit.bind(this)}
 				}),
 				
 				this.cancel_button = $e('input', {
 					'type':'button', 
-					'value':'cancel', 
+					'value':this._cancel_button_msg, 
 					'events':{'click':this.cancel_edit.bind(this)}
 				}),
 				
@@ -89,10 +96,10 @@ var InlineEditor = new Class({
 		//this.edit_input.select();
 		
 		// these buttons might be in the wrong state from last time so we reset them
-		this.save_button.value = this.options.save_text;
+		this.save_button.value = this._save_button_msg;
 		this.save_button.disabled = false;
 		this.cancel_button.disabled = false;
-		this.error_span.innerHTML = "";
+		this.error_span.innerHTML = '';
 	},
 	
 	cancel_edit: function() {
@@ -107,7 +114,7 @@ var InlineEditor = new Class({
 		}
 		
 		this.save_button.disabled = true;
-		this.save_button.value = 'saving...';
+		this.save_button.value = this._saving_msg;
 		
 		var new_value = this.edit_input.value.trim();
 		var request_data = (this.options.id)? {'value':new_value, 'id': this.options.id} : {'value':new_value};
@@ -136,11 +143,11 @@ var InlineEditor = new Class({
 	
 	save_failed: function(json_response) {
 		json_response = json_response || {};
-		this.save_button.value = this.options.save_text;
+		this.save_button.value = this._save_button_msg;
 		this.save_button.disabled = false;
 		
 		// did we get an error message back from the server? no? then just use a default one
-		this.error_span.innerHTML = ' Error: ' + (json_response.message || 'Could Not Save');
+		this.error_span.innerHTML = this._error_prefix + (json_response.message || this._default_error);
 	},
 	
 	// we use this as a function so that it can be overridden easily by subclasses
