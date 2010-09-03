@@ -23,6 +23,7 @@ var InlineEditor = new Class({
 		this._saving_msg = 'saving...';
 		this._default_error = 'Could Not Save';
 		this._error_prefix = ' Error: ';
+		this._empty_msg = '<i>none</i>';
 		
 		this.element = $(elem);
 		
@@ -30,23 +31,23 @@ var InlineEditor = new Class({
 		this.options = options || {};
 		this.options.url = this.options.url || this.element.get('data-url');
 		this.options.data = this.options.data || {};
+		this.options.empty_msg = this.options.empty_msg || this._empty_msg;
 		
 		if(this.element.getFirst() == null) {
-			this.current_text = this.element.innerHTML; //todo: check that it is a textnode only?
+			// only set the current text if there are no children
+			this.current_text = this.element.innerHTML.trim();
 		}
 		
 		this._init_element();
-		
 	},
 	
 	_init_element: function() {
 		// apply the css class to the root element so it gets the default styles
 		this.element.addClass('ine-root');
 		
-		// we create all the dom needed to make it editable and place it inside the current
-		// element
+		// note the condition on 'text'. Show the empty message if it is empty.
 		this.edit_link = $e('a', {
-			'text': this.current_text,
+			'html': (this.current_text == "") ? this.options.empty_msg : this.current_text,
 			'href': 'javascript:void(0)',
 			'events':{'click':this.start_edit.bind(this)}
 		});
@@ -140,7 +141,6 @@ var InlineEditor = new Class({
 		this.edit_form.hide();
 		this.edit_link.show();
 		
-		this.current_text = this.edit_input.value;
 		this._set_link();
 	},
 	
@@ -153,10 +153,19 @@ var InlineEditor = new Class({
 		this.error_span.innerHTML = this._error_prefix + (json_response.message || this._default_error);
 	},
 	
-	// we use this as a function so that it can be overridden easily by subclasses
+	// we use this as a function to change the current_text 
+	// so that it can be overridden easily by subclasses (such as the Combo class)
 	_set_link: function() {
-		this.current_text = this.edit_input.value;
-		this.edit_link.innerHTML = this.current_text;
+		this.current_text = this.edit_input.value.trim();
+		
+		if(this.current_text == "") {
+			// show the empty message, otherwise the element will be very hard to click on
+			// with nothing in it
+			this.edit_link.innerHTML = this.options.empty_msg;
+		} else {
+			this.edit_link.innerHTML = this.current_text;
+		}
+		
 	}
 });
 

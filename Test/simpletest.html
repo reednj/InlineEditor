@@ -39,7 +39,7 @@ var Ui = {
 		});
 		
 		new InlineEditor.Combo('edit-combo', {
-		data: {'id': 14},
+		data: {'id': 14, 'name':'nathan'},
 		options_list: [
 			{'text':'eins', 'value':'1'},
 			{'text':'zwei', 'value':'2'},
@@ -52,6 +52,8 @@ var Ui = {
 				'hash_code': 'bd85c4ff64d38c081b1c0ec09f0076de7f233fbd'
 			}
 		});
+		
+		new InlineEditor('empty-msg', {'empty_msg':'empty'});
 	}
 }
 
@@ -68,6 +70,9 @@ window.addEvent('load', Ui.init.bind(Ui));
 <div class='editable' data-url='api/edittest.php?f=y' data-id='12'>this edit will fail</div>
 <div class='editable' data-url='api/edittest.php' data-id='13'>nathan</div>
 <div class='editable' data-url='api/edittest.php'>no id on this one</div>
+<div class='editable' data-url='api/edittest.php'></div>
+
+<div id='empty-msg' data-url='api/edittest.php'></div>
 
 <div class='editable-dd' data-url='api/edittest.php' data-id='14'>
 	<div data-value='1'>Alpha</div>
