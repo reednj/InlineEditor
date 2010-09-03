@@ -1,0 +1,117 @@
+<!doctype html public "-//w3c//dtd html 4.0 strict//en">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<title> InlineEditor for Mootools - Demo </title>
+
+<link rel="stylesheet" href="./css-lib/default.css" type="text/css">
+<link rel="stylesheet" href="../Source/InlineEditor.css" type="text/css">
+
+<script src='./js-lib/mootools-1.2.4-core.js' type='text/javascript'></script>
+
+<script src='../Source/InlineEditor.js' type='text/javascript'></script>
+<script src='../Source/InlineEditor.Combo.js' type='text/javascript'></script>
+
+<style type='text/css'>
+	#t-body {
+		font-size: 16pt;
+		margin: 32px;
+	}
+	
+	.box {
+		padding: 16px;
+	}
+	
+	span.small-edit {
+		font-weight:bold;
+	}
+	
+	.small-edit input[type=text] {
+		width: 32px;
+	}
+	
+	.edit a, .editable a, .dropdown a {
+		background-color: #cef;
+		padding: 1px 3px;
+	}
+
+</style>
+
+<script type='text/javascript'>
+
+var Ui = {
+	init: function() {
+		$$('.small-edit').each(function(item) {
+			new InlineEditor(item);
+		});
+		
+		$$('.edit').each(function(item) {
+			new InlineEditor(item, {'url':'api/edittest.php'});
+		});
+		
+		$$('.dropdown').each(function(item) {
+			new InlineEditor.Combo(item, {'url':'api/edittest.php'});
+		});
+		
+		new InlineEditor('will-fail', {'url':'api/edittest.php', 'data':{'f':'y', 'id':1}});
+		
+	}
+}
+
+window.addEvent('load', Ui.init.bind(Ui));
+
+</script>
+
+</head>
+<body>
+
+	
+<div id='t-body'>
+<div>click on something to edit it (I've made everything editable blue, but this doesn't happen by default)</div>
+
+<div class='box'>
+
+	<table>
+		<tr><td>name: </td> <td><div class='edit'>Nathan Reed</div></td></tr>
+		<tr><td>email: </td> <td><div class='edit'>reednj@blah.com</div></td></tr>
+		<tr><td>twitter: </td> <td><div class='edit'>@reednj</div></td></tr>
+		<tr><td>website: </td> <td><div class='edit'>http://servralert.com</div></td></tr>
+	</table>
+
+</div>
+
+<div>You could use css to set the width of the textbox</div>
+<div class='box'>
+	<div>Set Minimum: <span class='editable small-edit'>10</span> Set Maximum: <span class='editable small-edit'></span></div>
+</div>
+
+
+
+<div>Drop down examples:</div>
+
+<div class='box'>
+
+	<div class='dropdown'>
+		<div data-value='1'>Alpha</div>
+		<div data-value='2'>Beta</div>
+		<div data-value='3'>Charlie</div>
+		<div data-value='4'>Delta</div>
+		<div data-value='5'>Echo</div>
+	</div>
+	
+	<div class='dropdown'>
+		<div data-value='WA'>Western Australia</div>
+		<div data-value='SA'>South Australia</div>
+		<div data-value='QLD'>Queensland</div>
+		<div data-value='NSW'>New South Wales</div>
+		<div data-value='ACT'>ACT</div>
+		<div data-value='NT'>Northern Territory</div>
+	</div>
+
+</div>
+
+</div>
+
+</body>
+</html>
