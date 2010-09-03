@@ -8,7 +8,7 @@ authors:
 - Nathan Reed
 
 requires:
-- core/1.2.4: '*'
+- core/1.2.4: [Class, Event, Element, Selectors, JSON, Request]
 
 provides: 
 - InlineEditor

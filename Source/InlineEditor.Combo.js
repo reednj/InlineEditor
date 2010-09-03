@@ -8,8 +8,8 @@ authors:
 - Nathan Reed
 
 requires:
-- core/1.2.4: '*'
-- InlineEditor
+- core/1.2.4: [Class, Event, Element, Selectors, JSON, Request]
+- /InlineEditor
 
 provides: InlineEditor.Combo
 
