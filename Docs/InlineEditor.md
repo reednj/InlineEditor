@@ -15,7 +15,7 @@ InlineEditor Method: constructor {#InlineEditor:constructor}
 
 ### Options:
 * url	- (*string*) url to send the save request to
-* id	- (*number*) id to send along with the request
+* data	- (*object*) extra data to send along with the save request
 
 ### Events:
 
@@ -24,7 +24,12 @@ InlineEditor Method: constructor {#InlineEditor:constructor}
 	
 You can also place these attributes on the element its self, like this:
 	
-	<div class='editable' data-url='save-change.php' data-id='1'>data value</div>
+	<div class='editable' data-url='save-change.php'>data value</div>
+	
+	<!-- 
+	since sending a row_id along with the data is so common, you can include it as 
+	an attribute to be send as extra data. This is equivilent to using 'data: {id: 2}'
+	-->
 	<div class='editable' data-url='save-change.php' data-id='2'>data value</div>
 
 	// then you could initialize all these at once like this:

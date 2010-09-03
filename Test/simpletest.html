@@ -38,11 +38,20 @@ var Ui = {
 			new InlineEditor.Combo(item);
 		});
 		
-		new InlineEditor.Combo('edit-combo', {options_list: [
+		new InlineEditor.Combo('edit-combo', {
+		data: {'id': 14},
+		options_list: [
 			{'text':'eins', 'value':'1'},
 			{'text':'zwei', 'value':'2'},
 			{'text':'drei', 'value':'3', 'selected':true}
 		]});
+		
+		new InlineEditor('extra-data', {
+			data: {
+				'user_id': 125,
+				'hash_code': 'bd85c4ff64d38c081b1c0ec09f0076de7f233fbd'
+			}
+		});
 	}
 }
 
@@ -58,7 +67,7 @@ window.addEvent('load', Ui.init.bind(Ui));
 
 <div class='editable' data-url='api/edittest.php?f=y' data-id='12'>this edit will fail</div>
 <div class='editable' data-url='api/edittest.php' data-id='13'>nathan</div>
-<div class='editable' data-url='api/edittest.php' data-id='14'>jones</div>
+<div class='editable' data-url='api/edittest.php'>no id on this one</div>
 
 <div class='editable-dd' data-url='api/edittest.php' data-id='14'>
 	<div data-value='1'>Alpha</div>
@@ -68,7 +77,8 @@ window.addEvent('load', Ui.init.bind(Ui));
 	<div data-value='5'>Echo</div>
 </div>
 
-<div id='edit-combo' data-url='api/edittest.php' data-id='15'></div>
+<div id='edit-combo' data-url='api/edittest.php'></div>
+<div id='extra-data' data-url='api/edittest.php' data-id='2'>this sends extra data</div>
 
 </div>
 

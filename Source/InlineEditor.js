@@ -29,7 +29,7 @@ var InlineEditor = new Class({
 		// set defaults...
 		this.options = options || {};
 		this.options.url = this.options.url || this.element.get('data-url');
-		this.options.id = this.options.id || this.element.get('data-id');
+		this.options.data = this.options.data || {};
 		
 		if(this.element.getFirst() == null) {
 			this.current_text = this.element.innerHTML; //todo: check that it is a textnode only?
@@ -117,8 +117,11 @@ var InlineEditor = new Class({
 		this.save_button.value = this._saving_msg;
 		
 		var new_value = this.edit_input.value.trim();
-		var request_data = (this.options.id)? {'value':new_value, 'id': this.options.id} : {'value':new_value};
-		
+		//var request_data = (this.options.id)? {'value':new_value, 'id': this.options.id} : {'value':new_value};
+		var request_data = $H({'value':new_value});
+		request_data.combine(this.options.data);
+		request_data.include('id', this.element.get('data-id')); // if 'id' already exists it will not be overwritten
+			
 		new Request.JSON({
 			'url': this.options.url,
 			onSuccess: this.save_complete.bind(this),

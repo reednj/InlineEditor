@@ -15,7 +15,7 @@ InlineEditor Method: constructor {#InlineEditor:constructor}
 
 ### Options:
 * url			- (*string*) url to send the save request to
-* id			- (*number*) id to send along with the request
+* data			- (*object*) extra data to send along with the save request
 * options_list	- (*array*) an array of objects in the form {'value':1, 'text':'one'}. These will be the options in the Dropdown
 
 ### Events:
