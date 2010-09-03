@@ -59,3 +59,13 @@ or in the dom:
 		<div data-value='2'>Two</div>
 		<div data-value='3' data-selected='true'>Three</div>
 	</div>
+	
+Server Request Format
+---------------------
+
+This class will make a request to the given url as a GET request. The new value will be sent
+as 'value', and the extra data will be sent as it is given in the 'data' option.
+
+If there is an error you should return a '500' code. If you send back error information with the type
+'application/json' in the format {code:, message:} the message will be shown as the error on the 
+screen, otherwise a generic error message is shown.

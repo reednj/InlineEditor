@@ -5,6 +5,12 @@ sleep(1);
 $will_fail = $_GET['f'];
 $item_id = $_GET['id'];
 
+if($will_fail == 'php') {
+	header("HTTP/1.0 500 Application Error");
+	trigger_error("THIS IS A TEST ERROR MESSAGE", E_USER_ERROR);
+	return;
+}
+
 if($will_fail == 'r') {
 	// randomly fail or succeed
 	$will_fail = (mt_rand() % 2 == 0)? 'y':'n';
