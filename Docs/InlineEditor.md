@@ -14,11 +14,14 @@ InlineEditor Method: constructor {#InlineEditor:constructor}
 2. options - (*object*) InlineEditor options
 
 ### Options:
-* url		- (*string*) url to send the save request to
-* data		- (*object, optional*) extra data to send along with the save request
-* empty_msg	- (*string, optional*) the message to show when the element is empty. You can use html.
+* url			- (*string, optional*) url to send the save request to
+* data			- (*object, optional*) extra data to send along with the save request
+* empty_msg		- (*string, optional*) the message to show when the element is empty. You can use html.
+* hide_buttons	- (*bool, optional*) hides the 'save' and 'cancel' buttons, use ENTER to submit, ESC to cancel.
 
 ### Events:
+
+* onSuccess	- called after the edit is complete, argument is the new text
 
 ### Example:
 	new InlineEditor(element, {url: 'save-change.php', 'id':15});

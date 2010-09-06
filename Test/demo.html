@@ -59,7 +59,7 @@
 var Ui = {
 	init: function() {
 		$$('.small-edit').each(function(item) {
-			new InlineEditor(item);
+			new InlineEditor(item, {hide_buttons: true});
 		});
 		
 		$$('.edit').each(function(item) {
@@ -100,7 +100,7 @@ window.addEvent('load', Ui.init.bind(Ui));
 
 </div>
 
-<div class='desc'>You could use css to set the width of the textbox</div>
+<div class='desc'>For small textboxes you can set the 'hide_buttons' option. (and use css to set the input width)</div>
 <div class='box'>
 	<div>
 		Set Minimum: <span class='editable small-edit' data-url='api/edittest.php'>10</span> 

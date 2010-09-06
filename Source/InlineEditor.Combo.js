@@ -86,7 +86,20 @@ InlineEditor.Combo = new Class({
 			option_elems.push($e('option', item));
 		});
 		
-		return $e('select', {'children': option_elems});
+		return $e('select', {
+			'children': option_elems,
+			'events': {'keydown': function(e) {
+				// detect the escape key, and use it to cancel the edit
+				// this event code is duplicated between ie & ie.combo.
+				// it should really be moved somewhere common...
+				if(e.key == 'esc') {
+					this.cancel_edit();
+				} else if(e.key == 'enter') {
+					// we have to capture this for the select box
+					// for some reason the form does not detect it properly
+					this.save_edit();
+				}
+			}.bind(this)}});
 	},
 	
 	_set_link: function() {

@@ -35,6 +35,7 @@ var InlineEditor = new Class({
 		this.options.data = this.options.data || {};
 		this.options.empty_msg = this.options.empty_msg || this._empty_msg;
 		this.options.onSuccess = this.options.onSuccess || $empty;
+		this.options.hide_buttons = this.options.hide_buttons || this.element.get('data-hidebuttons') || false;
 		
 		if(this.element.getFirst() == null) {
 			// only set the current text if there are no children
@@ -62,6 +63,14 @@ var InlineEditor = new Class({
 			'children': this._create_form()
 		});
 		
+		// should we hide the 'save' and 'cancel' buttons?
+		if(this.options.hide_buttons) {
+			this.save_button.hide();
+			this.cancel_button.hide();			
+		}
+		
+		// finally we insert the new link and form elements into the orginal elem that
+		// was passed in..
 		this.element.empty().grab(this.edit_link).grab(this.edit_form );
 	},
 	
@@ -85,10 +94,19 @@ var InlineEditor = new Class({
 				this.error_span = $e('span', {'class':'ine-error'})
 			]
 		});
+
 	},
 	
 	_create_input: function() {
-		return $e('input', {'type':'text'});
+		return $e('input', {
+			'type':'text',
+			'events': {'keydown': function(e) {
+				// detect the escape key, and use it to cancel the edit
+				if(e.key == 'esc') {
+					this.cancel_edit();
+				}
+			}.bind(this)}
+		});
 	},
 	
 	start_edit: function() {
@@ -97,14 +115,17 @@ var InlineEditor = new Class({
 		
 		// init the edit textbox with the correct value etc
 		this.edit_input.value = this.current_text;
-		this.edit_input.focus();
-		//this.edit_input.select();
 		
 		// these buttons might be in the wrong state from last time so we reset them
 		this.save_button.value = this._save_button_msg;
+		this.error_span.innerHTML = '';
+		
 		this.save_button.disabled = false;
 		this.cancel_button.disabled = false;
-		this.error_span.innerHTML = '';
+		this.edit_input.disabled = false;
+		
+		this.edit_input.focus();
+		//this.edit_input.select();
 		
 		// TODO this is in totally the wrong place. We should call a start
 		// edit event.
@@ -126,6 +147,7 @@ var InlineEditor = new Class({
 			return;
 		}
 		
+		this.edit_input.disabled = true;
 		this.save_button.disabled = true;
 		this.save_button.value = this._saving_msg;
 		

@@ -17,9 +17,12 @@ InlineEditor Method: constructor {#InlineEditor:constructor}
 * url			- (*string*) url to send the save request to
 * data			- (*object, optional*) extra data to send along with the save request
 * empty_msg		- (*string, optional*) the message to show when the element is empty. You can use html.
+* hide_buttons	- (*bool, optional*) hides the 'save' and 'cancel' buttons, use ENTER to submit, ESC to cancel.
 * options_list	- (*array, optional*) an array of objects in the form {'value':1, 'text':'one'}. These will be the options in the Dropdown
 
 ### Events:
+
+* onSuccess	- called after the edit is complete, 1st argument is the new text and the second is the new value
 
 ### Example:
 	new InlineEditor.Combo(element, {
