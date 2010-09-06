@@ -34,6 +34,7 @@ var InlineEditor = new Class({
 		this.options.url = this.options.url || this.element.get('data-url');
 		this.options.data = this.options.data || {};
 		this.options.empty_msg = this.options.empty_msg || this._empty_msg;
+		this.options.onSuccess = this.options.onSuccess || $empty;
 		
 		if(this.element.getFirst() == null) {
 			// only set the current text if there are no children
@@ -119,7 +120,9 @@ var InlineEditor = new Class({
 	
 	save_edit: function() {
 		if(!$defined(this.options.url)) {
-			alert('cannot save: no url defined');
+			// no url? we just want to call the save complete method and
+			// trigger the onSucess event.
+			this.save_complete();
 			return;
 		}
 		
@@ -150,7 +153,6 @@ var InlineEditor = new Class({
 	save_complete: function() {
 		this.edit_form.hide();
 		this.edit_link.show();
-		
 		this._set_link();
 	},
 	
@@ -176,6 +178,7 @@ var InlineEditor = new Class({
 			this.edit_link.innerHTML = this.current_text;
 		}
 		
+		this.options.onSuccess(this.current_text);
 	}
 });
 

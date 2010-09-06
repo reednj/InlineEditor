@@ -93,5 +93,7 @@ InlineEditor.Combo = new Class({
 		this.selectedIndex = this.edit_input.selectedIndex;
 		this.current_text = this.edit_input.options[this.selectedIndex].text;;
 		this.edit_link.innerHTML = this.current_text;
+		
+		this.options.onSuccess(this.current_text, this.edit_input.value);
 	}
 });

@@ -31,9 +31,25 @@
 		width: 32px;
 	}
 	
-	.edit a, .editable a, .dropdown a {
+	.edit a, .editable a, .dropdown a, .cs-c a  {
 		background-color: #cef;
 		padding: 1px 3px;
+	}
+	
+	.dropdown {
+		margin: 3px;
+	}
+	
+	#color-target {
+		margin-top: 8px;
+		width: 48px; 
+		height: 48px; 
+		background-color: white; 
+		border: 2px solid gray;
+	}
+	
+	div.desc {
+		font-weight: bold;
 	}
 
 </style>
@@ -54,8 +70,11 @@ var Ui = {
 			new InlineEditor.Combo(item, {'url':'api/edittest.php'});
 		});
 		
-		new InlineEditor('will-fail', {'url':'api/edittest.php', 'data':{'f':'y', 'id':1}});
-		
+		new InlineEditor.Combo('color-select', {
+			onSuccess: function(new_text, new_value) {
+				$('color-target').setStyle('background-color', new_value);
+			}
+		});		
 	}
 }
 
@@ -68,7 +87,7 @@ window.addEvent('load', Ui.init.bind(Ui));
 
 	
 <div id='t-body'>
-<div>click on something to edit it (I've made everything editable blue, but this doesn't happen by default)</div>
+<div class='desc'>click on something to edit it (I've made everything editable blue, but this doesn't happen by default)</div>
 
 <div class='box'>
 
@@ -81,14 +100,17 @@ window.addEvent('load', Ui.init.bind(Ui));
 
 </div>
 
-<div>You could use css to set the width of the textbox</div>
+<div class='desc'>You could use css to set the width of the textbox</div>
 <div class='box'>
-	<div>Set Minimum: <span class='editable small-edit'>10</span> Set Maximum: <span class='editable small-edit'></span></div>
+	<div>
+		Set Minimum: <span class='editable small-edit' data-url='api/edittest.php'>10</span> 
+		Set Maximum: <span class='editable small-edit' data-url='api/edittest.php'></span>
+	</div>
 </div>
 
 
 
-<div>Drop down examples:</div>
+<div class='desc'>You can use a dropdown instead of a Text input with InlineEditor.Combo:</div>
 
 <div class='box'>
 
@@ -110,6 +132,24 @@ window.addEvent('load', Ui.init.bind(Ui));
 	</div>
 
 </div>
+
+
+<div class='desc'>You don't have to set a url. You can use the onSuccess event to do things after the submit purely in js</div>
+
+<div class='box'>
+
+<div id='color-select' class='cs-c'>
+	<div data-value='#FFF'>White</div>
+	<div data-value='#F00'>Red</div>
+	<div data-value='#0F0'>Green</div>
+	<div data-value='#00F'>Blue</div>
+	<div data-value='#000'>Black</div>
+</div>
+
+<div id='color-target'></div>
+
+</div>
+
 
 </div>
 

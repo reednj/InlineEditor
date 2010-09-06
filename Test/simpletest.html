@@ -53,6 +53,18 @@ var Ui = {
 		});
 		
 		new InlineEditor('empty-msg', {'empty_msg':'empty'});
+		
+		new InlineEditor('no-url', {
+			onSuccess: function(new_text) {
+				alert(new_text);
+			}
+		});
+		
+		new InlineEditor.Combo('color-select', {
+			onSuccess: function(new_text, new_value) {
+				$('color-target').setStyle('background-color', new_value);
+			}
+		});
 	}
 }
 
@@ -86,6 +98,19 @@ window.addEvent('load', Ui.init.bind(Ui));
 
 <div id='edit-combo' data-url='api/edittest.php'></div>
 <div id='extra-data' data-url='api/edittest.php' data-id='2'>this sends extra data</div>
+
+
+<div id='no-url'>no url</div>
+
+<div id='color-select'>
+	<div data-value='#F00'>Red</div>
+	<div data-value='#0F0'>Green</div>
+	<div data-value='#00F'>Blue</div>
+	<div data-value='#000'>Black</div>
+	<div data-value='#FFF'>White</div>
+</div>
+
+<div id='color-target' style='width: 48px; height: 48px; background-color: gray; border: 2px solid gray;'></div>
 
 </div>
 
