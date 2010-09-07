@@ -2,7 +2,7 @@ InlineEditor
 ============
 
 InlineEditor allows any text element to be made editable. The user clicks on it, and it turns into a textbox with
-a save and cancel button. On save a request is send to the server with the new value, and any other needed metadata.
+a save and cancel button. On save a request is sent to the server with the new value, and any other needed metadata.
 
 ![ScreenShot](http://imgur.com/ZGoDz.png)
 

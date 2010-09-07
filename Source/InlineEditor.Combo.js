@@ -22,6 +22,7 @@ InlineEditor.Combo = new Class({
 		this.element = $(elem);
 		this.options = options || {};
 		this.options.options_list = this.options.options_list || this._read_options() || [];
+		this.options.selected = this.options.selected || this.element.get('data-selected');
 
 		this.parent(this.element, this.options);
 		
@@ -58,6 +59,13 @@ InlineEditor.Combo = new Class({
 	_set_default: function(options_list) {
 		var has_default = false;
 		var selectedIndex = -1;
+		
+		// has the user set the selected item on the root node itself?
+		if($defined(this.options.selected)) {
+			this.edit_input.value = this.options.selected;
+			this.current_text = this.edit_input.options[this.edit_input.selectedIndex].text;
+			return this.edit_input.selectedIndex;
+		}
 		
 		// scan through the list, set the current_text, and select the
 		// default item. if no default is specified then select the top 
@@ -104,7 +112,7 @@ InlineEditor.Combo = new Class({
 	
 	_set_link: function() {
 		this.selectedIndex = this.edit_input.selectedIndex;
-		this.current_text = this.edit_input.options[this.selectedIndex].text;;
+		this.current_text = this.edit_input.options[this.selectedIndex].text;
 		this.edit_link.innerHTML = this.current_text;
 		
 		this.options.onSuccess(this.current_text, this.edit_input.value);

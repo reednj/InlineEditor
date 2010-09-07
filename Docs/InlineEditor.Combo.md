@@ -19,6 +19,7 @@ InlineEditor Method: constructor {#InlineEditor:constructor}
 * empty_msg		- (*string, optional*) the message to show when the element is empty. You can use html.
 * hide_buttons	- (*bool, optional*) hides the 'save' and 'cancel' buttons, use ENTER to submit, ESC to cancel.
 * options_list	- (*array, optional*) an array of objects in the form {'value':1, 'text':'one'}. These will be the options in the Dropdown
+* selected		- (*string*) the value of the currently selected item, if this is not set, the first item will be selected.
 
 ### Events:
 
