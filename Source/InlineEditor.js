@@ -10,7 +10,7 @@ authors:
 requires:
 - core/1.2.4: [Class, Event, Element, Selectors, JSON, Request]
 
-provides: 
+provides:
 - InlineEditor
 - $e
 
@@ -26,9 +26,9 @@ var InlineEditor = new Class({
 		this._default_error = 'Could Not Save';
 		this._error_prefix = ' Error: ';
 		this._empty_msg = '<i>none</i>';
-		
+
 		this.element = $(elem);
-		
+
 		// set defaults...
 		this.options = options || {};
 		this.options.url = this.options.url || this.element.get('data-url');
@@ -36,67 +36,67 @@ var InlineEditor = new Class({
 		this.options.empty_msg = this.options.empty_msg || this._empty_msg;
 		this.options.onSuccess = this.options.onSuccess || $empty;
 		this.options.hide_buttons = this.options.hide_buttons || this.element.get('data-hidebuttons') || false;
-		
+
 		if(this.element.getFirst() == null) {
 			// only set the current text if there are no children
 			this.current_text = this.element.innerHTML.trim();
 		}
-		
+
 		this._init_element();
 	},
-	
+
 	_init_element: function() {
 		// apply the css class to the root element so it gets the default styles
 		this.element.addClass('ine-root');
-		
+
 		// note the condition on 'text'. Show the empty message if it is empty.
 		this.edit_link = $e('a', {
 			'html': (this.current_text == "") ? this.options.empty_msg : this.current_text,
 			'href': 'javascript:void(0)',
 			'events':{'click':this.start_edit.bind(this)}
 		});
-		
+
 		// we create the form inside a span because having a form straight in there
 		// can cause strange things to happen...
 		this.edit_form = $e('span', {
 			'styles':{'display':'none'},
 			'children': this._create_form()
 		});
-		
+
 		// should we hide the 'save' and 'cancel' buttons?
 		if(this.options.hide_buttons) {
 			this.save_button.hide();
-			this.cancel_button.hide();			
+			this.cancel_button.hide();
 		}
-		
+
 		// finally we insert the new link and form elements into the orginal elem that
 		// was passed in..
 		this.element.empty().grab(this.edit_link).grab(this.edit_form );
 	},
-	
+
 	_create_form: function() {
 		return $e('form', {
 			'events':{'submit': function() {this.save_edit(); return false;}.bind(this)},
 			'children': [
 				this.edit_input = this._create_input(),
-				
+
 				this.save_button = $e('input', {
-					'type':'submit', 
+					'type':'submit',
 					'value':this._save_button_msg
 				}),
-				
+
 				this.cancel_button = $e('input', {
-					'type':'button', 
-					'value':this._cancel_button_msg, 
+					'type':'button',
+					'value':this._cancel_button_msg,
 					'events':{'click':this.cancel_edit.bind(this)}
 				}),
-				
+
 				this.error_span = $e('span', {'class':'ine-error'})
 			]
 		});
 
 	},
-	
+
 	_create_input: function() {
 		return $e('input', {
 			'type':'text',
@@ -108,37 +108,37 @@ var InlineEditor = new Class({
 			}.bind(this)}
 		});
 	},
-	
+
 	start_edit: function() {
 		this.edit_form.show();
 		this.edit_link.hide();
-		
+
 		// init the edit textbox with the correct value etc
 		this.edit_input.value = this.current_text;
-		
+
 		// these buttons might be in the wrong state from last time so we reset them
 		this.save_button.value = this._save_button_msg;
 		this.error_span.innerHTML = '';
-		
+
 		this.save_button.disabled = false;
 		this.cancel_button.disabled = false;
 		this.edit_input.disabled = false;
-		
+
 		this.edit_input.focus();
 		//this.edit_input.select();
-		
+
 		// TODO this is in totally the wrong place. We should call a start
 		// edit event.
 		if($defined(this.edit_input.selectedIndex)) {
 			this.edit_input.selectedIndex= this.selectedIndex;
 		}
 	},
-	
+
 	cancel_edit: function() {
 		this.edit_form.hide();
 		this.edit_link.show();
 	},
-	
+
 	save_edit: function() {
 		if(!$defined(this.options.url)) {
 			// no url? we just want to call the save complete method and
@@ -146,18 +146,18 @@ var InlineEditor = new Class({
 			this.save_complete();
 			return;
 		}
-		
+
 		this.edit_input.disabled = true;
 		this.save_button.disabled = true;
 		this.save_button.value = this._saving_msg;
-		
+
 		var new_value = this.edit_input.value.trim();
-		
+
 		// set up the data to send to the server.
 		var request_data = $H({'value':new_value});
 		request_data.combine(this.options.data);
 		request_data.include('id', this.element.get('data-id')); // if 'id' already exists it will not be overwritten
-			
+
 		new Request({
 			'url': this.options.url,
 			onSuccess: this.save_complete.bind(this),
@@ -169,29 +169,30 @@ var InlineEditor = new Class({
 					this.save_failed({'code':xhr.status, 'message':xhr.status + ' - ' + xhr.statusText});
 				}
 			}.bind(this)
-		}).get(request_data);		
+		}).get(request_data);
 	},
-	
+
 	save_complete: function() {
 		this.edit_form.hide();
 		this.edit_link.show();
 		this._set_link();
 	},
-	
+
 	save_failed: function(json_response) {
 		json_response = json_response || {};
 		this.save_button.value = this._save_button_msg;
 		this.save_button.disabled = false;
-		
+		this.edit_input.disabled = false;
+
 		// did we get an error message back from the server? no? then just use a default one
 		this.error_span.innerHTML = this._error_prefix + (json_response.message || this._default_error);
 	},
-	
-	// we use this as a function to change the current_text 
+
+	// we use this as a function to change the current_text
 	// so that it can be overridden easily by subclasses (such as the Combo class)
 	_set_link: function() {
 		this.current_text = this.edit_input.value.trim();
-		
+
 		if(this.current_text == "") {
 			// show the empty message, otherwise the element will be very hard to click on
 			// with nothing in it
@@ -199,7 +200,7 @@ var InlineEditor = new Class({
 		} else {
 			this.edit_link.innerHTML = this.current_text;
 		}
-		
+
 		this.options.onSuccess(this.current_text);
 	}
 });
