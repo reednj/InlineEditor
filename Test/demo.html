@@ -121,16 +121,6 @@ window.addEvent('load', Ui.init.bind(Ui));
 
 </div>
 
-<div class='desc'>For small textboxes you can set the 'hide_buttons' option. (and use css to set the input width)</div>
-<div class='box'>
-	<div>
-		Set Minimum: <span class='editable small-edit' data-url='api/edittest.php'>10</span> 
-		Set Maximum: <span class='editable small-edit' data-url='api/edittest.php'></span>
-	</div>
-</div>
-
-
-
 <div class='desc'>You can use a dropdown instead of a Text input with InlineEditor.Combo:</div>
 
 <div class='box'>
@@ -154,6 +144,20 @@ window.addEvent('load', Ui.init.bind(Ui));
 
 </div>
 
+<div class='desc'>For small textboxes you can set the 'hide_buttons' option. (and use css to set the input width)</div>
+<div class='box'>
+	<div>
+		Set Minimum: <span class='editable small-edit' data-url='api/edittest.php'>10</span> 
+		Set Maximum: <span class='editable small-edit' data-url='api/edittest.php'></span>
+	</div>
+</div>
+
+<div class='desc'>You can set a format code on numbers, so that appear with commas etc</div>
+<div class='box'>
+	<div>
+		Tonnes/hours: <span class='editable edit' data-format='N0'>10593.1</span> 
+	</div>
+</div>
 
 <div class='desc'>You don't have to set a url. You can use the onSuccess event to do things after the submit purely in js</div>
 

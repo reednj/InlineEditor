@@ -18,6 +18,7 @@ InlineEditor Method: constructor {#InlineEditor:constructor}
 * data			- (*object, optional*) extra data to send along with the save request
 * empty_msg		- (*string, optional*) the message to show when the element is empty. You can use html.
 * hide_buttons	- (*bool, optional*) hides the 'save' and 'cancel' buttons, use ENTER to submit, ESC to cancel.
+* format		- (*string, optional*) A format code of the type Nx where x is the number of decimal places to format with. Only use this if the data type is numerical.
 
 ### Events:
 

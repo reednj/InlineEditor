@@ -36,6 +36,7 @@ var InlineEditor = new Class({
 		this.options.empty_msg = this.options.empty_msg || this._empty_msg;
 		this.options.onSuccess = this.options.onSuccess || $empty;
 		this.options.hide_buttons = this.options.hide_buttons || this.element.get('data-hidebuttons') || false;
+		this.options.format = this.options.format || this.element.get('data-format');
 
 		if(this.element.getFirst() == null) {
 			// only set the current text if there are no children
@@ -49,9 +50,16 @@ var InlineEditor = new Class({
 		// apply the css class to the root element so it gets the default styles
 		this.element.addClass('ine-root');
 
+		// maybe we need to format the text before putting it into the html?
+		if(this.options.format && this.current_text != "") {
+			var html_text = this.current_text.toFloat().format(this.options.format);
+		} else {
+			var html_text = this.current_text;
+		}
+
 		// note the condition on 'text'. Show the empty message if it is empty.
 		this.edit_link = $e('a', {
-			'html': (this.current_text == "") ? this.options.empty_msg : this.current_text,
+			'html': (this.current_text == "") ? this.options.empty_msg : html_text,
 			'href': 'javascript:void(0)',
 			'events':{'click':this.start_edit.bind(this)}
 		});
@@ -113,6 +121,7 @@ var InlineEditor = new Class({
 		this.edit_form.show();
 		this.edit_link.hide();
 
+
 		// init the edit textbox with the correct value etc
 		this.edit_input.value = this.current_text;
 
@@ -128,10 +137,11 @@ var InlineEditor = new Class({
 		//this.edit_input.select();
 
 		// TODO this is in totally the wrong place. We should call a start
-		// edit event.
+		// edit event. This code is for combo boxes only
 		if($defined(this.edit_input.selectedIndex)) {
 			this.edit_input.selectedIndex= this.selectedIndex;
 		}
+
 	},
 
 	cancel_edit: function() {
@@ -198,7 +208,12 @@ var InlineEditor = new Class({
 			// with nothing in it
 			this.edit_link.innerHTML = this.options.empty_msg;
 		} else {
-			this.edit_link.innerHTML = this.current_text;
+			if(this.options.format) {
+				this.edit_link.innerHTML = this.current_text.toFloat().format(this.options.format);
+			} else {
+				this.edit_link.innerHTML = this.current_text;
+			}
+
 		}
 
 		this.options.onSuccess(this.current_text);
@@ -277,3 +292,18 @@ Element.implement({
    show: function() {this.setStyle('display','');},
    hide: function() {this.setStyle('display','none');}
 });
+
+// add commas to long numbers
+//
+// http://snipplr.com/view/3516/mootools--numberformat/
+Number.implement({ format: function(decimals, dec_point, thousands_sep) {
+		decimals = (decimals || 'N2').replace('N', '').toInt();
+		dec_point = dec_point || '.';
+		thousands_sep = thousands_sep || ',';
+
+		var matches = /(-)?(\d+)(\.\d+)?/.exec((isNaN(this) ? 0 : this) + ''); // returns matches[1] as sign, matches[2] as numbers and matches[3] as decimals
+		var remainder = matches[2].length > 3 ? matches[2].length % 3 : 0;
+		return (matches[1] ? matches[1] : '') + (remainder ? matches[2].substr(0, remainder) + thousands_sep : '') + matches[2].substr(remainder).replace(/(\d{3})(?=\d)/g, "$1" + thousands_sep) +
+				(decimals && matches[3]? dec_point + (+ matches[3] || 0).round(decimals).toString().substr(2) : '');
+
+}});
