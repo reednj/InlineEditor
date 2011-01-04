@@ -80,6 +80,7 @@ var InlineEditor = new Class({
 		// finally we insert the new link and form elements into the orginal elem that
 		// was passed in..
 		this.element.empty().grab(this.edit_link).grab(this.edit_form );
+
 	},
 
 	_create_form: function() {
@@ -103,6 +104,7 @@ var InlineEditor = new Class({
 			]
 		});
 
+
 	},
 
 	_create_input: function() {
@@ -123,7 +125,7 @@ var InlineEditor = new Class({
 
 
 		// init the edit textbox with the correct value etc
-		this.edit_input.value = this.current_text;
+		this.edit_input.value = this.current_text.unescapeHTML();
 
 		// these buttons might be in the wrong state from last time so we reset them
 		this.save_button.value = this._save_button_msg;
@@ -307,3 +309,36 @@ Number.implement({ format: function(decimals, dec_point, thousands_sep) {
 				(decimals && matches[3]? dec_point + (+ matches[3] || 0).round(decimals).toString().substr(2) : '');
 
 }});
+
+String.implement({
+	// from: http://www.codecodex.com/wiki/Escape_HTML_Specials
+	escapeHTML: function()
+	{
+		var Escaped = ""
+		var Str = this;
+
+		for (var i = 0; i < Str.length; ++i)
+		{
+			var ThisCh = Str.charAt(i);
+
+			if (ThisCh == "&")	{
+				ThisCh = "&amp;"
+			} else if (ThisCh == "<") {
+				ThisCh = "&lt;"
+			} else if (ThisCh == "\"") {
+				ThisCh = "&quot;"
+			} else if (ThisCh == ">") {
+				ThisCh = "&gt;"
+			}
+
+			Escaped += ThisCh
+		}
+
+		return Escaped;
+	},
+
+	unescapeHTML: function()
+	{
+		return this.replace('&amp;', '&').replace('&lt;', '<').replace('&gt;', '>').replace('&quot;', '"');
+	}
+});

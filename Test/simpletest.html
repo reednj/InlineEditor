@@ -18,7 +18,7 @@
 		font-size: 16pt;
 		margin: 96px;
 	}
-	
+
 	.editable-dd div {
 		display:none;
 	}
@@ -32,11 +32,11 @@ var Ui = {
 		$$('.editable').each(function(item) {
 			new InlineEditor(item);
 		});
-		
+
 		$$('.editable-dd').each(function(item) {
 			new InlineEditor.Combo(item);
 		});
-		
+
 		new InlineEditor.Combo('edit-combo', {
 		data: {'id': 14, 'name':'nathan'},
 		options_list: [
@@ -44,22 +44,22 @@ var Ui = {
 			{'text':'zwei', 'value':'2'},
 			{'text':'drei', 'value':'3', 'selected':true}
 		]});
-		
+
 		new InlineEditor('extra-data', {
 			data: {
 				'user_id': 125,
 				'hash_code': 'bd85c4ff64d38c081b1c0ec09f0076de7f233fbd'
 			}
 		});
-		
+
 		new InlineEditor('empty-msg', {'empty_msg':'empty'});
-		
+
 		new InlineEditor('no-url', {
 			onSuccess: function(new_text) {
 				alert(new_text);
 			}
 		});
-		
+
 		new InlineEditor.Combo('color-select', {
 			onSuccess: function(new_text, new_value) {
 				$('color-target').setStyle('background-color', new_value);
@@ -75,7 +75,7 @@ window.addEvent('load', Ui.init.bind(Ui));
 </head>
 <body>
 
-	
+
 <div id='t-body'>
 
 <div class='editable' data-url='api/edittest.php?f=y' data-id='12'>this edit will fail</div>
@@ -83,6 +83,7 @@ window.addEvent('load', Ui.init.bind(Ui));
 <div class='editable' data-url='badurl.php'>404 error</div>
 <br/>
 <div class='editable' data-url='api/edittest.php' data-id='13'>nathan</div>
+<div class='editable' data-url='api/edittest.php' data-id='15'>lion &amp; nathan</div>
 <div class='editable' data-url='api/edittest.php'>no id on this one</div>
 <div class='editable' data-url='api/edittest.php'></div>
 
