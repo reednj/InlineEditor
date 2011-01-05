@@ -34,7 +34,7 @@ var Ui = {
 		});
 
 		$$('.editable-dd').each(function(item) {
-			new InlineEditor.Combo(item);
+			new InlineEditor.Combo(item, {hide_buttons: true});
 		});
 
 		new InlineEditor.Combo('edit-combo', {
