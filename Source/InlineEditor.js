@@ -112,12 +112,21 @@ var InlineEditor = new Class({
 	_create_input: function() {
 		return $e('input', {
 			'type':'text',
-			'events': {'keydown': function(e) {
-				// detect the escape key, and use it to cancel the edit
-				if(e.key == 'esc') {
-					this.cancel_edit();
-				}
-			}.bind(this)}
+			'events': {
+				'keydown': function(e) {
+					// detect the escape key, and use it to cancel the edit
+					if(e.key == 'esc') {
+						this.cancel_edit();
+					}
+				}.bind(this),
+				'blur': function(e) {
+					// when in hide_buttons mode, we want to automatically cancel
+					// if the user clicks off the control.
+					if(this.options.hide_buttons){
+						this.cancel_edit();
+					}
+				}.bind(this)
+			}
 		});
 	},
 

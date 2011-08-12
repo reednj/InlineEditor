@@ -118,7 +118,14 @@ InlineEditor.Combo = new Class({
 						this.save_edit();
 					}
 				}.bind(this),
-				'change': this._selection_changed.bind(this)
+				'change': this._selection_changed.bind(this),
+				'blur': function(e) {
+					// when in hide_buttons mode, we want to automatically cancel
+					// if the user clicks off the control.
+					if(this.options.hide_buttons){
+						this.cancel_edit();
+					}
+				}.bind(this)
 			}});
 	},
 
