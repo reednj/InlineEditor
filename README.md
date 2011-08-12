@@ -4,7 +4,7 @@ InlineEditor
 InlineEditor allows any text element to be made editable. The user clicks on it, and it turns into a textbox with
 a save and cancel button. On save a request is sent to the server with the new value, and any other needed metadata.
 
-![ScreenShot](http://imgur.com/ZGoDz.png)
+![ScreenShot](http://i.imgur.com/h6j3X.png)
 
 How to use
 ----------
@@ -62,7 +62,7 @@ or in the dom:
 Server Request Format
 ---------------------
 
-This class will make a request to the given url as a GET request. The new value will be sent
+This class will make a request to the given url as a GET, POST or JSON request. The new value will be sent
 as 'value', and the extra data will be sent as it is given in the 'data' option.
 
 If there is an error you should return a '500' code. If you send back error information with the type
