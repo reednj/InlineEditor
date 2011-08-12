@@ -32,6 +32,7 @@ var InlineEditor = new Class({
 		// set defaults...
 		this.options = options || {};
 		this.options.url = this.options.url || this.element.get('data-url');
+		this.options.data_id = this.options.data_id || this.element.get('data-id');
 		this.options.data = this.options.data || {};
 		this.options.empty_msg = this.options.empty_msg || this._empty_msg;
 		this.options.onSuccess = this.options.onSuccess || $empty;
@@ -169,7 +170,7 @@ var InlineEditor = new Class({
 		// set up the data to send to the server.
 		var request_data = $H({'value':new_value});
 		request_data.combine(this.options.data);
-		request_data.include('id', this.element.get('data-id')); // if 'id' already exists it will not be overwritten
+		request_data.include('id', this.options.data_id); // if 'id' already exists it will not be overwritten
 
 		var save_req = new Request({
 			'url': this.options.url,

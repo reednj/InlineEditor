@@ -15,7 +15,8 @@ InlineEditor Method: constructor {#InlineEditor:constructor}
 
 ### Options:
 * url			- (*string, optional*) url to send the save request to
-* data			- (*object, optional*) extra data to send along with the save request
+* data			- (*object, optional*) extra data to send along with the save request.
+* data_id		- (*string, optional*) Sohrthand method to pass in {data:{id:'xxx' }} on the object
 * empty_msg		- (*string, optional*) the message to show when the element is empty. You can use html.
 * hide_buttons	- (*bool, optional*) hides the 'save' and 'cancel' buttons, use ENTER to submit, ESC to cancel.
 * format		- (*string, optional*) A format code of the type Nx where x is the number of decimal places to format with. Only use this if the data type is numerical.
