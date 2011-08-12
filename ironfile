@@ -1,0 +1,12 @@
+#!/usr/bin/ruby
+#
+# Nathan Reed, 2010-06-10
+
+$deploy_modes = {
+	'default' => {
+		:host => 'reednj@popacular.com',
+		:src => '/var/www/dev/inlineeditor',
+		:dest => 'popacular.com/inline-editor',
+		:ignored_files => ['.git', 'Docs', 'ironfile', '*.md', '*.yml'],
+	}
+}
