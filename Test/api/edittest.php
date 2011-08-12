@@ -1,6 +1,6 @@
 <?php
 
-sleep(1);
+//sleep(1);
 
 $will_fail = $_GET['f'];
 $item_id = $_GET['id'];
