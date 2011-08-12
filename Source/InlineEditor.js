@@ -37,6 +37,7 @@ var InlineEditor = new Class({
 		this.options.onSuccess = this.options.onSuccess || $empty;
 		this.options.hide_buttons = this.options.hide_buttons || this.element.get('data-hidebuttons') || false;
 		this.options.format = this.options.format || this.element.get('data-format');
+		this.options.method = (this.options.method || 'GET').toUpperCase();
 
 		if(this.element.getFirst() == null) {
 			// only set the current text if there are no children
@@ -170,7 +171,7 @@ var InlineEditor = new Class({
 		request_data.combine(this.options.data);
 		request_data.include('id', this.element.get('data-id')); // if 'id' already exists it will not be overwritten
 
-		new Request({
+		var save_req = new Request({
 			'url': this.options.url,
 			onSuccess: this.save_complete.bind(this),
 			onFailure: function(xhr) {
@@ -181,7 +182,17 @@ var InlineEditor = new Class({
 					this.save_failed({'code':xhr.status, 'message':xhr.status + ' - ' + xhr.statusText});
 				}
 			}.bind(this)
-		}).get(request_data);
+		});
+
+		if(this.options.method == 'JSONPOST') {
+			save_req.setHeader('Content-Type', 'application/json');
+			save_req.send(JSON.encode(request_data));
+		} else if(this.options.method == 'POST') {
+			save_req.post(request_data);
+		} else {
+			save_req.get(request_data);
+		}
+
 	},
 
 	save_complete: function() {

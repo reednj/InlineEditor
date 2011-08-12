@@ -19,6 +19,7 @@ InlineEditor Method: constructor {#InlineEditor:constructor}
 * empty_msg		- (*string, optional*) the message to show when the element is empty. You can use html.
 * hide_buttons	- (*bool, optional*) hides the 'save' and 'cancel' buttons, use ENTER to submit, ESC to cancel.
 * format		- (*string, optional*) A format code of the type Nx where x is the number of decimal places to format with. Only use this if the data type is numerical.
+* method		- (*string, optional*) Http method used to send the data. Can be GET, POST or JSONPOST. Defaults to 'GET';
 
 ### Events:
 
