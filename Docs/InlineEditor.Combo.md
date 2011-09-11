@@ -6,7 +6,7 @@ InlineEditor Method: constructor {#InlineEditor:constructor}
 -------------------------------------------------------------
 
 ### Syntax:
-	var e = InlineEditor.Combo(element, options);
+	var e = new InlineEditor.Combo(element, options);
 
 ### Arguments:
 

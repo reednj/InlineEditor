@@ -6,7 +6,7 @@ InlineEditor Method: constructor {#InlineEditor:constructor}
 -------------------------------------------------------------
 
 ### Syntax:
-	var e = InlineEditor(element, options);
+	var e = new InlineEditor(element, options);
 
 ### Arguments:
 
