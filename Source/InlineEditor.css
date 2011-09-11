@@ -30,6 +30,14 @@
 	margin-left: 4px;
 }
 
+.ine-root textarea {
+	font-family: inherit;
+	font-size: 1em;
+
+	width: 512px;
+	height: 96px;
+}
+
 .ine-error {
 	font-size: 0.8em;
 	font-weight: bold;
