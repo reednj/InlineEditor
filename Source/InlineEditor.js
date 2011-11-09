@@ -40,6 +40,8 @@ var InlineEditor = new Class({
 		this.options.format = this.options.format || this.element.get('data-format');
 		this.options.method = (this.options.method || 'GET').toUpperCase();
 
+		if (this.options.data.id && !this.options.data_id) this.options.data_id = this.options.data.id;
+
 		if(this.element.getFirst() == null) {
 			// only set the current text if there are no children
 			this.current_text = this.element.innerHTML.trim();
@@ -112,6 +114,7 @@ var InlineEditor = new Class({
 	_create_input: function() {
 		return $e('input', {
 			'type':'text',
+			'value': this.current_text ? this.current_text.unescapeHTML() : null,
 			'events': {
 				'keydown': function(e) {
 					// detect the escape key, and use it to cancel the edit
@@ -205,10 +208,12 @@ var InlineEditor = new Class({
 
 	},
 
-	save_complete: function() {
+	save_complete: function(result) {
+		if (result)
+			result = JSON.decode(result);
 		this.edit_form.hide();
 		this.edit_link.show();
-		this._set_link();
+		this._set_link(result);
 	},
 
 	save_failed: function(json_response) {
@@ -223,7 +228,7 @@ var InlineEditor = new Class({
 
 	// we use this as a function to change the current_text
 	// so that it can be overridden easily by subclasses (such as the Combo class)
-	_set_link: function() {
+	_set_link: function(result) {
 		this.current_text = this.edit_input.value.trim();
 
 		if(this.current_text == "") {
@@ -239,7 +244,18 @@ var InlineEditor = new Class({
 
 		}
 
-		this.options.onSuccess(this.current_text);
+		this.options.onSuccess(this.current_text, result);
+	},
+
+	getValue: function() {
+		var value = '';
+		if (this.edit_input.get('tag') === 'select') {
+			value = this.edit_input.getSelected()[0].get('value');
+		} else {
+			value = this.edit_input.get('value').trim();
+		}
+
+		return Object.make(this.options.data_id, value);
 	}
 });
 
@@ -362,4 +378,19 @@ String.implement({
 	{
 		return this.replace('&amp;', '&').replace('&lt;', '<').replace('&gt;', '>').replace('&quot;', '"');
 	}
+});
+
+// Returns an object based on a passed key and value.
+//
+// Object.make('myKey', 'myValue')
+//
+// Would return {myKey: myValue}
+Object.extend('make', function(key, value) {
+	if (typeOf(value) == 'string')
+		value = '"' + value + '"'
+	if (typeOf(value) == 'object')
+		value = JSON.encode(value);
+	var temp = '{"' + key + '":' + value + '}';
+
+	return JSON.decode(temp);
 });
