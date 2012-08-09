@@ -249,13 +249,18 @@ var InlineEditor = new Class({
 
 	getValue: function() {
 		var value = '';
+
 		if (this.edit_input.get('tag') === 'select') {
 			value = this.edit_input.getSelected()[0].get('value');
 		} else {
 			value = this.edit_input.get('value').trim();
 		}
 
-		return Object.make(this.options.data_id, value);
+		return value;
+	},
+
+	getValueID: function() {
+		return Object.make(this.options.data_id, this.getValue());
 	}
 });
 
