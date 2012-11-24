@@ -1,3 +1,5 @@
+var $empty = function(){}
+
 /*
 ---
 description: InlineEditor - Simple Edit-inPlace AJAX edit control
@@ -154,7 +156,7 @@ var InlineEditor = new Class({
 
 		// TODO this is in totally the wrong place. We should call a start
 		// edit event. This code is for combo boxes only
-		if($defined(this.edit_input.selectedIndex)) {
+		if(this.edit_input.selectedIndex != undefined) {
 			this.edit_input.selectedIndex= this.selectedIndex;
 		}
 
@@ -166,7 +168,7 @@ var InlineEditor = new Class({
 	},
 
 	save_edit: function() {
-		if(!$defined(this.options.url)) {
+		if(this.options.url == undefined) {
 			// no url? we just want to call the save complete method and
 			// trigger the onSucess event.
 			this.save_complete();
@@ -180,9 +182,10 @@ var InlineEditor = new Class({
 		var new_value = this.edit_input.value.trim();
 
 		// set up the data to send to the server.
-		var request_data = $H({'value':new_value});
-		request_data.combine(this.options.data);
-		request_data.include('id', this.options.data_id); // if 'id' already exists it will not be overwritten
+		var request_data = Object.merge({'value':new_value}, this.options.data);
+		if(request_data.id == undefined) {
+			request_data.id = this.options.data_id;
+		}
 
 		var save_req = new Request({
 			'url': this.options.url,
@@ -293,15 +296,15 @@ var InlineEditor = new Class({
 function $e(tag, props) {
    tag = tag || 'div';
 
-   if(!$defined(props)) {
+   if(props == undefined) {
       return new Element(tag);
    }
 
    // normalize the properties element for the
    // mootools element constructor
-   if($type(props) == 'string') {
+   if(typeOf(props) == 'string') {
       props = {'text': props};
-   } else if($type(props) == 'element') {
+   } else if(typeOf(props) == 'element') {
       props = {'children': props};
    }
 
@@ -313,9 +316,9 @@ function $e(tag, props) {
 
    var new_element = new Element(tag, props);
 
-   if($defined(children)) {
+   if(children != undefined) {
 
-      if($type(children) == 'element') {
+      if(typeOf(children) == 'element') {
          // if they have just passed through one child, then
          // normalize it by turning it into an array with one element.
          children = [children];
@@ -399,3 +402,12 @@ Object.extend('make', function(key, value) {
 
 	return JSON.decode(temp);
 });
+
+//Object.implement('include', function(key, value) {
+//
+//	if(this[key] == undefined) {
+//		this[key] = value;
+//	}
+//
+//	return this;
+//});

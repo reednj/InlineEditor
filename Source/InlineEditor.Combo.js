@@ -70,7 +70,7 @@ InlineEditor.Combo = new Class({
 		var selectedIndex = -1;
 
 		// has the user set the selected item on the root node itself?
-		if($defined(this.options.selected)) {
+		if(this.options.selected != undefined) {
 			this.edit_input.value = this.options.selected;
 			this.current_text = this.edit_input.options[this.edit_input.selectedIndex].text;
 			return this.edit_input.selectedIndex;
