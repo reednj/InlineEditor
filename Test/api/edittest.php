@@ -2,8 +2,8 @@
 
 //sleep(1);
 
-$will_fail = $_GET['f'];
-$item_id = $_GET['id'];
+$will_fail = isset($_GET['f']) ? $_GET['f'] : false;
+$item_id =isset($_GET['id']) ? $_GET['id'] : null;
 
 if($will_fail == 'php') {
 	header("HTTP/1.0 500 Application Error");
@@ -22,13 +22,13 @@ if($will_fail == 'y') {
 	send_result(200, "item_id '$item_id' saved!");
 }
 
-function send_error($code, $message) 
+function send_error($code, $message)
 {
 	header("HTTP/1.0 500 Application Error");
 	send_result($code, $message);
 }
 
-function send_result($code, $message) 
+function send_result($code, $message)
 {
 	header('Content-type: application/json');
 	print json_encode(array('code'=>$code, 'message'=>$message));
