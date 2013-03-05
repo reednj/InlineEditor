@@ -247,7 +247,7 @@ var InlineEditor = new Class({
 
 		}
 
-		this.options.onSuccess(this.current_text, result);
+		this.options.onSuccess(this.current_text, result, this);
 	},
 
 	getValue: function() {
